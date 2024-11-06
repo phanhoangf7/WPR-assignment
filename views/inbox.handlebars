@@ -1,0 +1,40 @@
+<div class="email-list-container">
+	<h1>Inbox</h1>
+	{{#if emails.length}}
+		<form id="deleteForm" class="email-list">
+			{{#each emails}}
+				<div class="email-item">
+					<input
+						type="checkbox"
+						name="emailIds"
+						value="{{id}}"
+						class="email-checkbox"
+					/>
+					<div class="email-content">
+						<span class="sender">{{sender_name}}</span>
+						<a href="/email/{{id}}" class="subject">
+							{{#if subject}}{{subject}}{{else}}(no subject){{/if}}
+						</a>
+						<span class="time">{{formatDate sent_at}}</span>
+					</div>
+				</div>
+			{{/each}}
+		</form>
+		<button id="deleteButton" class="delete-button">Delete Selected</button>
+		<div class="pagination">
+			<a href="?page=1" class="page-link" id="prev-link">Previous</a>
+
+			<div class="page-numbers">
+				<a href="?page=1" class="page-link active">1</a>
+				<a href="?page=2" class="page-link">2</a>
+				<a href="?page=3" class="page-link">3</a>
+				<a href="?page=4" class="page-link">4</a>
+				<a href="?page=5" class="page-link">5</a>
+			</div>
+
+			<a href="?page=2" class="page-link" id="next-link">Next</a>
+		</div>
+	{{else}}
+		<p class="no-emails">No emails in your inbox</p>
+	{{/if}}
+</div>

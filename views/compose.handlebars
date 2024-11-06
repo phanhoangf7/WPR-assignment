@@ -1,0 +1,38 @@
+<div class="compose-container">
+	<h1>Compose Email</h1>
+	{{#if error}}
+		<div class="error-message">{{error}}</div>
+	{{/if}}
+	{{#if success}}
+		<div class="success-message">{{success}}</div>
+	{{/if}}
+	<form
+		action="email/send/"
+		method="POST"
+		enctype="multipart/form-data"
+		class="compose-form"
+	>
+		<div class="form-group">
+			<label for="recipient">To:</label>
+			<select id="recipient" name="recipient" required>
+				<option value="">Select recipient</option>
+				{{#each recipients}}
+					<option value="{{id}}">{{full_name}} ({{email}})</option>
+				{{/each}}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="subject">Subject:</label>
+			<input type="text" id="subject" name="subject" />
+		</div>
+		<div class="form-group">
+			<label for="body">Message:</label>
+			<textarea id="body" name="body" rows="10"></textarea>
+		</div>
+		<div class="form-group">
+			<label for="attachment">Attachment:</label>
+			<input type="file" id="attachment" name="attachment" />
+		</div>
+		<button type="submit">Send</button>
+	</form>
+</div>

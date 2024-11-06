@@ -1,0 +1,26 @@
+<div class="email-detail-container">
+	<div class="email-header">
+		<h1>{{#if email.subject}}{{email.subject}}{{else}}(no subject){{/if}}</h1>
+		<div class="email-meta">
+			{{#if isInbox}}
+				<p>From: {{email.sender_name}} ({{email.sender_email}})</p>
+			{{else}}
+				<p>To: {{email.recipient_name}} ({{email.recipient_email}})</p>
+			{{/if}}
+			<p>Sent: {{formatDate email.sent_at}}</p>
+		</div>
+	</div>
+	<div class="email-body">
+		{{#if email.body}}
+			<pre>{{email.body}}</pre>
+		{{else}}
+			<p>(no content)</p>
+		{{/if}}
+	</div>
+	{{#if email.attachment_path}}
+		<div class="attachment">
+			<p>Attachment:
+				<a href="/download/{{email.id}}" class="download-link">Download</a></p>
+		</div>
+	{{/if}}
+</div>

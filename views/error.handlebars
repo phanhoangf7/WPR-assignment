@@ -1,0 +1,10 @@
+{{! views/error.handlebars }}
+<div class="error-container">
+	<h1>{{status}}</h1>
+	<p>{{message}}</p>
+	{{#if user}}
+		<a href="/views/inbox.handlebars">Return to Inbox</a>
+	{{else}}
+		<a href="/views/signin.handlebars">Return to Sign In</a>
+	{{/if}}
+</div>

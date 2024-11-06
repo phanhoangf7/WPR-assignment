@@ -1,0 +1,37 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Email System - {{title}}</title>
+		<link rel="stylesheet" href="/css/styles.css" />
+	</head>
+	<body>
+		{{#if user}}
+			<header class="main-header">
+				<div class="user-info">
+					<span>{{user.full_name}}</span>
+				</div>
+				<form action="/views/" method="POST" class="signout-form">
+					<button type="submit">Sign out</button>
+				</form>
+			</header>
+			<div class="layout-container">
+				<nav class="side-nav">
+					<ul>
+						<li><a href="/compose" class="nav-link">Compose</a></li>
+						<li><a href="/inbox" class="nav-link">Inbox</a></li>
+						<li><a href="/outbox" class="nav-link">Outbox</a></li>
+					</ul>
+				</nav>
+				<main class="main-content">
+					{{{body}}}
+				</main>
+			</div>
+		{{else}}
+			{{{body}}}
+		{{/if}}
+		{{#if deleteEnabled}}
+			<script src="/public/js/delete-emails.js"></script>
+		{{/if}}
+	</body>
+</html>

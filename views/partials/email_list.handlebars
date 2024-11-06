@@ -1,0 +1,82 @@
+<div class="email-list-container">
+	{{#if emails.length}}
+		<div class="email-actions">
+			<button id="bulk-delete" class="btn btn-danger" type="button">
+				Delete Selected
+			</button>
+			<span id="email-count">{{emails.length}}</span>
+			emails
+		</div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						<input type="checkbox" id="select-all" />
+					</th>
+					<th>{{#if isInbox}}From{{else}}To{{/if}}</th>
+					<th>Subject</th>
+					<th>Date</th>
+					<th>Attachment</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each emails}}
+					<tr data-email-id="{{this.id}}">
+						<td>
+							<input
+								type="checkbox"
+								class="email-checkbox"
+								value="{{this.id}}"
+							/>
+						</td>
+						<td>{{#if
+								isInbox
+							}}{{this.sender_name}}{{else}}{{this.recipient_name}}{{/if}}</td>
+						<td>
+							<a href="/email/{{this.id}}" class="email-subject">
+								{{this.subject}}
+							</a>
+						</td>
+						<td>{{formatDate this.sent_at}}</td>
+						<td>
+							{{#if this.attachment_path}}
+								<a
+									href="/api/emails/{{this.id}}/attachment"
+									class="btn btn-sm btn-outline-primary"
+								>
+									<i class="fas fa-paperclip"></i>
+								</a>
+							{{/if}}
+						</td>
+						<td>
+							<button
+								class="btn btn-sm btn-danger delete-email"
+								data-email-id="{{this.id}}"
+							>
+								<i class="fas fa-trash"></i>
+							</button>
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+
+		<div class="pagination">
+			<a href="?page=1" class="page-link" id="prev-link">Previous</a>
+
+			<div class="page-numbers">
+				<a href="?page=1" class="page-link active">1</a>
+				<a href="?page=2" class="page-link">2</a>
+				<a href="?page=3" class="page-link">3</a>
+				<a href="?page=4" class="page-link">4</a>
+				<a href="?page=5" class="page-link">5</a>
+			</div>
+
+			<a href="?page=2" class="page-link" id="next-link">Next</a>
+		</div>
+	{{else}}
+		<div class="alert alert-info">No emails found.</div>
+	{{/if}}
+</div>
