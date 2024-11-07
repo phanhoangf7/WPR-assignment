@@ -1,19 +1,19 @@
 <nav class="side-nav">
-  <ul>
-    {{#if currentPath === '/compose'}}
-      <li><a href="/compose" class="active">Compose</a></li>
-    {{else}}
-      <li><a href="/compose">Compose</a></li>
-    {{/if}}
-    {{#if currentPath === '/inbox'}}
-      <li><a href="/inbox" class="active">Inbox</a></li>
-    {{else}}
-      <li><a href="/inbox">Inbox</a></li>
-    {{/if}}
-    {{#if currentPath === '/outbox'}}
-      <li><a href="/outbox" class="active">Outbox</a></li>
-    {{else}}
-      <li><a href="/outbox">Outbox</a></li>
-    {{/if}}
-  </ul>
+	<ul>
+		{{#if (eq currentPath "/compose")}}
+			<li><a href="/compose" class="active">Compose</a></li>
+		{{else}}
+			<li><a href="/compose">Compose</a></li>
+		{{/if}}
+		{{#if (eq currentPath "/inbox")}}
+			<li><a href="/inbox" class="active">Inbox</a></li>
+		{{else}}
+			<li><a href="/inbox">Inbox</a></li>
+		{{/if}}
+		{{#if (eq currentPath "/outbox")}}
+			<li><a href="/outbox" class="active">Outbox</a></li>
+		{{else}}
+			<li><a href="/outbox">Outbox</a></li>
+		{{/if}}
+	</ul>
 </nav>

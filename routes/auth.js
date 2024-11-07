@@ -1,4 +1,3 @@
-// routes/auth.js
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql2/promise");
@@ -8,8 +7,8 @@ const cookieParser = require("cookie-parser");
 // Database connection configuration
 const dbConfig = {
 	host: "127.0.0.1",
-	user: "root",
-	password: "",
+	user: "wpr",
+	password: "fit2024",
 	port: 3306,
 	database: "wpr2101040091",
 };

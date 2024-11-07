@@ -2,11 +2,11 @@ require("dotenv").config();
 const mysql = require("mysql2/promise");
 
 // Database configuration
-const DB_NAME = "wpr2101040091"; // Replace with your student ID
+const DB_NAME = "wpr2101040091";
 const DB_CONFIG = {
 	host: "127.0.0.1",
-	user: "root",
-	password: "",
+	user: "wpr",
+	password: "fit2024",
 	port: 3306,
 };
 

@@ -1,15 +1,13 @@
 <div class="pagination">
-  {{#if hasPreviousPage}}
-    <a href="?page={{previousPage}}" class="page-link">Previous</a>
-  {{/if}}
-  
-  {{#each pages}}
-    <a href="?page={{this}}" class="page-link {{#if this == page}} active {{/if}}">
-      {{this}}
-    </a>
-  {{/each}}
-  
-  {{#if hasNextPage}}
-    <a href="?page={{nextPage}}" class="page-link">Next</a>
-  {{/if}}
+	<!-- Previous page link will be rendered only if hasPreviousPage is true -->
+	<a href="?page=1" class="page-link">Previous</a>
+
+	<!-- Page links will be rendered for each page in the pages array -->
+	<a href="?page=1" class="page-link active">1</a>
+	<a href="?page=2" class="page-link">2</a>
+	<a href="?page=3" class="page-link">3</a>
+	<!-- ... -->
+
+	<!-- Next page link will be rendered only if hasNextPage is true -->
+	<a href="?page=4" class="page-link">Next</a>
 </div>

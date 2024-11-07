@@ -4,13 +4,15 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs").promises;
 const mysql = require("mysql2/promise");
+const inboxController = require("./inbox");
+const outboxController = require("./outbox");
 
 const dbConfig = {
 	host: "127.0.0.1",
-	user: "root",
-	password: "",
+	user: "wpr",
+	password: "fit2024",
 	port: 3306,
-	database: "wpr2101040091", // Replace with your database name
+	database: "wpr2101040091",
 };
 
 // Configure multer for file uploads
@@ -48,6 +50,17 @@ const upload = multer({
 });
 
 // Delete single email
+router.delete(
+	"/api/emails",
+	security.checkAuthentication,
+	security.csrfProtection,
+	(req, res) => {
+		const { inboxIds, outboxIds } = req.body;
+		inboxController.deleteEmails(req.cookies.user.email, inboxIds);
+		outboxController.deleteEmails(req.cookies.user.email, outboxIds);
+		res.status(200).json({ message: "Emails deleted" });
+	}
+);
 router.delete("/emails/:id", async (req, res) => {
 	const { id } = req.params;
 	const userId = req.session.userId;
@@ -82,16 +95,13 @@ router.delete("/emails/:id", async (req, res) => {
 			[id]
 		);
 
-		// If both have deleted, physically delete the email and its attachment
 		if (checkBothDeleted.rows.length > 0 && emailData.attachment_path) {
 			try {
 				await fs.unlink(path.join(__dirname, "..", emailData.attachment_path));
 			} catch (err) {
 				console.error("Error deleting file:", err);
-				// Continue execution even if file deletion fails
 			}
 
-			// Finally delete the email record
 			await db.query("DELETE FROM emails WHERE id = $1", [id]);
 		}
 
@@ -155,7 +165,6 @@ router.delete("/emails/bulk-delete", async (req, res) => {
 			}
 		}
 
-		// Commit transaction
 		await db.query("COMMIT");
 
 		res.json({ message: "Emails deleted successfully" });
