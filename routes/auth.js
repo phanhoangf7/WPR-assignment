@@ -224,29 +224,6 @@ router.post("/signup", async (req, res) => {
 	}
 });
 
-// Sign-out route
-router.post("/signout", async (req, res) => {
-	const sessionToken = req.cookies.session;
-
-	if (sessionToken) {
-		try {
-			const connection = await mysql.createConnection(dbConfig);
-
-			// Invalidate session in database
-			await connection.execute("DELETE FROM sessions WHERE token = ?", [
-				sessionToken,
-			]);
-
-			await connection.end();
-		} catch (error) {
-			console.error("Sign-out error:", error);
-		}
-	}
-
-	res.clearCookie("session");
-	res.redirect("/");
-});
-
 // Authentication middleware
 const requireAuth = async (req, res, next) => {
 	const sessionToken = req.cookies.session;

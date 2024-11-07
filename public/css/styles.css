@@ -422,3 +422,11 @@ body {
 		text-align: left;
 	}
 }
+#signout-button {
+	color: rgb(255, 255, 255);
+	padding: 10px 20px;
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: large;
+}

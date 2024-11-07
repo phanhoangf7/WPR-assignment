@@ -170,6 +170,7 @@ app.post("/signup", async (req, res) => {
 			"INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)",
 			[fullName, email, password]
 		);
+		res.redirect("/signin");
 		res.render("signup", {
 			success: "Account created successfully! Please sign in.",
 			layout: false,
@@ -181,6 +182,32 @@ app.post("/signup", async (req, res) => {
 			layout: false,
 		});
 	}
+});
+// Sign-out route
+app.get("/signout", async (req, res) => {
+	res.render("signout", { layout: false });
+});
+app.post("/signout", async (req, res) => {
+	const sessionToken = req.cookies.session;
+
+	if (sessionToken) {
+		try {
+			const connection = await mysql.createConnection(dbConfig);
+
+			// Invalidate session in database
+			await connection.execute("DELETE FROM sessions WHERE token = ?", [
+				sessionToken,
+			]);
+
+			await connection.end();
+		} catch (error) {
+			console.error("Sign-out error:", error);
+		}
+	}
+
+	// Clear the session cookie
+	res.clearCookie("session");
+	res.redirect("/signin");
 });
 
 app.get("/inbox", requireAuth, async (req, res) => {
@@ -356,11 +383,6 @@ app.delete("/api/emails", requireAuth, async (req, res) => {
 		console.error("Delete emails error:", error);
 		res.status(500).json({ error: "Server error" });
 	}
-});
-
-app.post("/signout", (req, res) => {
-	res.clearCookie("userId");
-	res.redirect("/");
 });
 
 // Start server
